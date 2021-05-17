@@ -1,6 +1,9 @@
 
 $(document).ready(function () {
-    $('#button1').bind('click',setScrollBy);
+    $('#button1').bind('click',setScrollBy1);
+    $('#button2').bind('click',setScrollBy2);
+    $('#button3').bind('click',setScrollIntoView);
+    $('#button4').bind('click',setScrollIntoViewOption);
 });
 //ДОМАШКА
 /*
@@ -63,15 +66,48 @@ console.log("windowScrollLeft "+windowScrollLeft);
 // управление прокруткой страницы
 // Метод scrollBy(x,y)  прокручивает страницу относительно
 // её текущего положения
-function setScrollBy(){
-    window.scrollBy(0,500);
+function setScrollBy1(){
+    window.scrollBy(0,50);
     const windowScrollTop = window.pageYOffset;
-    console.log(windowScrollTop);
+    console.log("windowScrollTop  "+ windowScrollTop);
+}
+function setScrollBy2(){
+    window.scrollTo({
+        top: 50,
+        left: 0,
+        // smooth, instant, либо auto; по-умолчанию auto
+        behavior: "smooth"
+    });
 }
 
+// управление прокруткой страницы
+/*
+* вызов elem.scrollIntoView(top) прокручивает страницу,
+* чтобы elem оказался вверху. У него есть один аргумент:
+* - если top = true(по-умолчанию), то страница будет прокручена,
+* чтобы elem появился в верхней части окна.
+* Верхний край элемента совмещен с верхней частью окна,
+* - если top = false, то страница будет прокручена, чтобы elem
+* появился внизу. Нижний край элемента будет совмещен с
+* нижним краем окна.
+* */
+function setScrollIntoView(){
+    const lessonSelected = document.querySelector('.lesson__selected');
+    //const lessonSelected = $('.lesson__selected');
+    lessonSelected.scrollIntoView();
+}
 
-
-
+function setScrollIntoViewOption(top){
+    const lessonSelected = document.querySelector('.lesson__selected');
+    lessonSelected.scrollIntoView({
+        // start, center, end, nearest.  По-умолчанию center
+        block: "center",
+        // start, center, end, nearest.  По-умолчанию nearest
+        inline: "nearest",
+        // auto, smooth . По-умолчанию auto
+        behavior: "smooth"
+    });
+}
 
 
 
