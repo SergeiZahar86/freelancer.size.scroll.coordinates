@@ -25,21 +25,22 @@ $(document).ready(function () {
 // Размеры окна браузера
 // clientWidth и clientHeight
 
-// Доступная ширина высота окна
+// Доступная (видимая) ширина высота окна ===============================================================================================
 const mainElement = document.documentElement;
 const mainElementWidth = mainElement.clientWidth;
 const mainElementHeight = mainElement.clientHeight;
-
 console.log("mainElement.clientWidth "+mainElementWidth);
 console.log("mainElement.clientHeight "+mainElementHeight);
 
-// ширина и высота окна вместе с полосами прокрутки
+
+// ширина и высота окна вместе с полосами прокрутки (видимая) =========================================================================
 const windowWidth = window.innerWidth;
 const windowHeight = window.innerHeight;
-
 console.log("window.innerWidth "+windowWidth);
 console.log("window.innerHeight "+windowHeight);
 
+
+// Ширина и высота документа включая прокрученную часть =================================================================================
 let scrollWidth = Math.max(
     document.body.scrollWidth, document.documentElement.scrollWidth,
     document.body.offsetWidth, document.documentElement.offsetWidth,
@@ -50,27 +51,25 @@ let scrollHeight = Math.max(
     document.body.offsetHeight, document.documentElement.offsetHeight,
     document.body.clientHeight, document.documentElement.clientHeight
 );
-
 console.log("scrollWidth "+scrollWidth);
 console.log("scrollHeight "+scrollHeight);
 
-// получить кол-во прокрученных пикселей
-// только для чтения
+
+// получить кол-во прокрученных пикселей только для чтения ======================================================================
 const windowScrollTop = window.pageYOffset;
 const windowScrollLeft  = window.pageXOffset;
-
 console.log("windowScrollTop "+windowScrollTop);
 console.log("windowScrollLeft "+windowScrollLeft);
 
 
-// управление прокруткой страницы
-// Метод scrollBy(x,y)  прокручивает страницу относительно
-// её текущего положения
+// управление прокруткой страницы =================================================================================================
+// Метод scrollBy(x,y)  прокручивает страницу относительно её текущего положения
 function setScrollBy1(){
     window.scrollBy(0,50);
     const windowScrollTop = window.pageYOffset;
     console.log("windowScrollTop  "+ windowScrollTop);
 }
+// Метод scrollTo(x,y)  прокручивает страницу к указанному значению
 function setScrollBy2(){
     window.scrollTo({
         top: 50,
@@ -91,10 +90,10 @@ function setScrollBy2(){
 * появился внизу. Нижний край элемента будет совмещен с
 * нижним краем окна.
 * */
-function setScrollIntoView(){
+function setScrollIntoView(top){
     const lessonSelected = document.querySelector('.lesson__selected');
     //const lessonSelected = $('.lesson__selected');
-    lessonSelected.scrollIntoView();
+    lessonSelected.scrollIntoView(top);
 }
 
 function setScrollIntoViewOption(top){
@@ -257,13 +256,13 @@ function setScrollIntoViewOptions(top) {
 
 //-------
 
-/*
+
 // Запретить прокрутку
 function setEnableDisableScroll() {
 	//document.body.style.overflow = "hidden";
 	document.body.classList.toggle('scroll-lock');
 }
-*/
+
 /*
 Для прокрутки страницы из JavaScript её DOM должен
 быть полностью построен.
@@ -276,14 +275,14 @@ function setEnableDisableScroll() {
 // Метрики элементов на странице
 
 // Получаем объект
-//const block = document.querySelector('.lesson__block');
+const block = document.querySelector('.lesson__block');
 
 // Позиция объекта
 // Свойства offsetParent, offsetLeft и offsetTop
 
 // Получаем родительский элемент
 // относительно которого позицианирован наш объект
-//const elementOffsetParent = block.offsetParent;
+const elementOffsetParent = block.offsetParent;
 
 
 /*
@@ -295,8 +294,8 @@ function setEnableDisableScroll() {
 2. или теги <td>, <th>, <table>,
 3. или <body>.
 */
-
-//console.log(elementOffsetParent);
+console.log("родитель");
+console.log(elementOffsetParent);
 
 /*
 Cитуации, в которых offsetParent равно null:
@@ -307,63 +306,63 @@ Cитуации, в которых offsetParent равно null:
 */
 
 
-/*
+
 // Получаем позицию объекта относительно предка (offsetParent)
 const elementOffsetLeft = block.offsetLeft;
 const elementOffsetTop = block.offsetTop;
-
+console.log("Получаем позицию объекта относительно предка (offsetParent)");
 console.log(elementOffsetLeft);
 console.log(elementOffsetTop);
-*/
+
 
 
 //========================================================================================================================================================
 
 // Общие размеры объекта
 // offsetWidth и offsetHeight
-/*
+
 // Получаем размеры объекта
 const elementOffsetWidth = block.offsetWidth;
 const elementOffsetHeight = block.offsetHeight;
-
+console.log("Общие размеры объекта");
 console.log(elementOffsetWidth);
 console.log(elementOffsetHeight);
-*/
+
 // Метрики для не показываемых элементов равны нулю.
 
 //========================================================================================================================================================
 
-/*
+
 // Отступы внутренней части элемента от внешней.
 // clientTop и clientLeft
 
 const elementClientTop = block.clientTop;
 const elementClientLeft = block.clientLeft;
-
+console.log("Отступы внутренней части элемента от внешней.");
 console.log(elementClientTop);
 console.log(elementClientLeft);
-*/
+
 
 //========================================================================================================================================================
 
-/*
+
 // Размеры объекта без
 // рамок и полосы прокрутки
 // clientWidth и clientHeight
 
 const elementClientWidth = block.clientWidth;
 const elementClientHeight = block.clientHeight;
-
+console.log("Размеры объекта без рамок и полосы прокрутки clientWidth и clientHeight");
 console.log(elementClientWidth);
 console.log(elementClientHeight);
 
 // общая ширина (offsetWidth) - рамка слева - рамка справа - скролл
 // 500 - 20 - 20 - 17 = 443
-*/
+
 
 //========================================================================================================================================================
 
-/*
+
 // Размеры объекта включающие в себя
 // прокрученную (которую не видно) часть.
 // В остальном работают как clientWidth/clientHeight,
@@ -371,14 +370,14 @@ console.log(elementClientHeight);
 
 const elementScrollWidth = block.scrollWidth;
 const elementScrollHeight = block.scrollHeight;
-
+console.log("Размеры объекта включающие в себя прокрученную (которую не видно) часть. В остальном работают как clientWidth/clientHeight, scrollWidth и scrollHeight");
 console.log(elementScrollWidth);
 console.log(elementScrollHeight);
-*/
+
 
 //========================================================================================================================================================
 
-/*
+
 // Размеры прокрученной области
 // scrollLeft и scrollTop
 
@@ -386,14 +385,14 @@ block.scrollTop = 150;
 
 const elementScrollLeft = block.scrollLeft;
 const elementScrollTop = block.scrollTop;
-
+console.log("Размеры прокрученной области scrollLeft и scrollTop");
 console.log(elementScrollLeft);
 console.log(elementScrollTop);
-*/
+
 
 //========================================================================================================================================================
 
-/*
+
 // Методы управления прокруткой
 // scrollBy, scrollTo и scrollIntoView
 // работают и для объекта
@@ -404,7 +403,7 @@ function setElementScrollBy() {
 		left: 0,
 		behavior: "smooth"
 	})
-}*/
+}
 
 //========================================================================================================================================================
 
@@ -435,7 +434,7 @@ function setElementScrollBy() {
 //========================================================================================================================================================
 
 
-/*
+
 // Координаты относительно окна браузера
 // getBoundingClientRect
 
@@ -443,45 +442,49 @@ function setElementScrollBy() {
 const item = document.querySelector('.lesson__item');
 
 // Получаем координаты относительно окна браузера
+console.log("Получаем координаты относительно окна браузера");
 const getItemCoords = item.getBoundingClientRect();
 
 console.log(getItemCoords);
 
 // Получаем конкретную координату относительно окна браузера
+console.log("Получаем конкретную координату относительно окна браузера");
 const getItemLeftCoord = item.getBoundingClientRect().left;
 
 console.log(getItemLeftCoord);
-*/
+
 
 //========================================================================================================================================================
 
 
-/*
+
 // Координаты относительно документа
 // getBoundingClientRect
 
 // Получаем объект
-const item = document.querySelector('.lesson__item');
+const item1 = document.querySelector('.lesson__item');
 
 // Получаем конкретную координату относительно окна браузера
-const getItemTopCoord = item.getBoundingClientRect().top;
+console.log("Получаем конкретную координату относительно окна браузера");
+const getItemTopCoord = item1.getBoundingClientRect().top;
 
 // Получаем конкретную координату относительно документа
+console.log("Получаем конкретную координату относительно документа");
 const getItemTopDocumentCoord = getItemTopCoord + window.pageYOffset;
 
 console.log(getItemTopCoord);
 console.log(getItemTopDocumentCoord);
-*/
+
 
 //========================================================================================================================================================
 
-/*
-// Получение объекта по координатам
-// document.elementFromPoint(x, y);
 
+// Получение объекта по координатам !!!! относительно окна браузера, а не документа
+// document.elementFromPoint(x, y);
+console.log("Получение объекта по координатам");
 const elem = document.elementFromPoint(100, 100);
 console.log(elem);
-*/
+
 
 //========================================================================================================================================================
 //========================================================================================================================================================
